@@ -46,7 +46,7 @@ args = parser.parse_args()
 if not args.verify:
     requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
-base_url = "https://" + args.controller + ":" + args.port
+base_url = "https://" + args.controller + ":" + str(args.port)
 login_url = base_url + "/api/login"
 login_data = {"username": args.username, "password": args.password}
 default_headers = {"Origin": base_url}
