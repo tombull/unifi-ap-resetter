@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Build and upload the docker image
         env:
-          DOCKER_HUB_REPO: tombull/unifimacreset
+          DOCKER_HUB_REPO: tombull/unifi-ap-resetter
         run: |
           echo ${{secrets.DOCKER_HUB_TOKEN}} | docker login --username tombull --password-stdin
           export SHORT_SHA=`git rev-parse --short=7 ${GITHUB_SHA}`
@@ -24,7 +24,7 @@ jobs:
           docker push ${DOCKER_HUB_REPO}:latest
       - name: Trigger deployment webhook
         env:
-          DOCKER_HUB_REPO: tombull/unifimacreset
+          DOCKER_HUB_REPO: tombull/unifi-ap-resetter
         run: |
           export SHORT_SHA=`git rev-parse --short=7 ${GITHUB_SHA}`
           curl -X POST -H "Content-Type: application/json" --data "{ \"name\": \"${DOCKER_HUB_REPO}\", \"tag\": \"${SHORT_SHA}\" }" https://keel.iteralis.com/v1/webhooks/native
